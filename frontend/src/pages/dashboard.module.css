@@ -1,0 +1,645 @@
+:root {
+  --bg: #060a18;
+  --panel: #0f1529;
+  --panel-strong: #0d1326;
+  --stroke: #1a2341;
+  --muted: #9aa5c1;
+  --text: #e2e8f0;
+  --accent: #22d3ee;
+  --accent-soft: #daa0be;
+  --warning: #f97316;
+}
+
+.dashboardShell {
+  display: flex;
+  gap: 16px;
+  background: var(--bg);
+  padding: 16px;
+  min-height: 100vh;
+  color: var(--text);
+}
+
+.sidebar {
+  width: 120px;
+  background: linear-gradient(175deg, #0d1328, #0a1021 70%);
+  border-radius: 20px;
+  padding: 18px 12px;
+  border: 1px solid #162040;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  position: sticky;
+  top: 12px;
+  height: calc(100vh - 32px);
+  min-height: 680px;
+}
+
+.brand {
+  display: grid;
+  gap: 6px;
+  align-items: center;
+  justify-items: center;
+}
+
+.brandMark {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border: 1px solid #243154;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(145deg, rgba(34, 211, 238, 0.18), rgba(218, 160, 190, 0.22));
+  color: var(--accent);
+}
+
+.brandText {
+  display: grid;
+  gap: 2px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.monthList {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.monthButton {
+  width: 100%;
+  padding: 10px 6px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #cbd5e1;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.monthButton:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: #1f2b4a;
+}
+
+.monthActive {
+  background: linear-gradient(145deg, rgba(34, 211, 238, 0.16), rgba(218, 160, 190, 0.22));
+  color: var(--accent);
+  border-color: rgba(34, 211, 238, 0.35);
+  box-shadow: 0 10px 26px rgba(34, 211, 238, 0.22);
+}
+
+.sidebarFooter {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sidebarNote {
+  opacity: 0.7;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topBar {
+  background: var(--panel-strong);
+  border: 1px solid #1c2848;
+  border-radius: 18px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+.navButtons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.navButton {
+  border: 1px solid #1f2b4e;
+  background: #101730;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: all 0.16s ease;
+}
+
+.navButton:hover {
+  border-color: var(--accent);
+}
+
+.navActive {
+  border-color: var(--accent);
+  box-shadow: 0 12px 26px rgba(34, 211, 238, 0.22);
+}
+
+.navIcon {
+  color: var(--accent);
+}
+
+.navLabel {
+  font-size: 14px;
+}
+
+.datePill {
+  margin-left: auto;
+  border: 1px solid #1f2b4e;
+  background: #101730;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #101730;
+  border: 1px solid #1f2b4e;
+  padding: 8px 10px;
+  border-radius: 14px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(34, 211, 238, 0.22), rgba(218, 160, 190, 0.22));
+  border: 1px solid #1f2b4e;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userMeta {
+  display: grid;
+  gap: 2px;
+}
+
+.userName {
+  font-weight: 700;
+}
+
+.userRole {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.addExpenseCard {
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  display: grid;
+  gap: 12px;
+}
+
+.formHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.formTitle {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.formHint {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+}
+
+.tileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.kicker {
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.tileTitle {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.tileSubtitle {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.tileAmount {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.balanceCard {
+  grid-column: span 2;
+  background: linear-gradient(145deg, #121a32, #0f1629);
+  min-height: 160px;
+}
+
+.balanceAmount {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-top: 14px;
+}
+
+.balanceSub {
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.netWorthCard {
+  background: linear-gradient(135deg, #f97316, #ef4444, #ec4899);
+  color: #fff;
+  min-height: 140px;
+  display: grid;
+  gap: 6px;
+}
+
+.netWorthValue {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.netWorthHint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sparkTile {
+  display: grid;
+  gap: 10px;
+}
+
+.sparkline {
+  width: 100%;
+  height: auto;
+}
+
+.categoryCard {
+  display: grid;
+  gap: 12px;
+}
+
+.trendIcon {
+  color: var(--accent);
+}
+
+.spendingList {
+  display: grid;
+  gap: 10px;
+}
+
+.spendingRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.spendingIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+}
+
+.spendingMeta {
+  display: grid;
+  gap: 2px;
+}
+
+.spendingLabel {
+  font-weight: 700;
+}
+
+.spendingValue {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.goalCard {
+  display: grid;
+  gap: 8px;
+}
+
+.goalRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.goalPercent {
+  color: #22c55e;
+  font-weight: 800;
+}
+
+.goalLabel {
+  color: var(--muted);
+}
+
+.progressTrack {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #0b1020;
+  border: 1px solid #18203a;
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #4ade80, #22d3ee);
+}
+
+.goalFooter {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.noticeCard {
+  display: grid;
+  gap: 10px;
+}
+
+.noticeBody {
+  background: #111a32;
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #233050;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.incomeSourceCard {
+  display: grid;
+  gap: 12px;
+}
+
+.sourceBars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-items: end;
+  min-height: 140px;
+}
+
+.sourceColumn {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.sourceBar {
+  width: 100%;
+  border-radius: 12px 12px 8px 8px;
+  background: linear-gradient(145deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.05));
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  display: grid;
+  place-items: end center;
+  padding-bottom: 8px;
+}
+
+.sourceValue {
+  font-size: 12px;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.sourceLabel {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.incomeExpenseCard {
+  grid-column: span 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.legendRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legendLabel {
+  color: var(--muted);
+  font-size: 13px;
+  margin-right: 10px;
+}
+
+.overlayLine {
+  margin-top: -110px;
+}
+
+.incomeExpenseFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.assetsCard {
+  display: grid;
+  gap: 12px;
+}
+
+.assetsBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.assetDonutWrap {
+  display: grid;
+  place-items: center;
+}
+
+.assetDonut {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.assetHole {
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1px solid #1a2341;
+}
+
+.assetList {
+  display: grid;
+  gap: 8px;
+}
+
+.assetRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.assetLabel {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.assetValue {
+  font-weight: 700;
+}
+
+.petCard {
+  display: grid;
+  gap: 12px;
+}
+
+.petList {
+  display: grid;
+  gap: 10px;
+}
+
+.petRow {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  align-items: center;
+  gap: 10px;
+  background: #111a32;
+  border: 1px solid #233050;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.petAmount {
+  font-weight: 800;
+  color: var(--warning);
+}
+
+.petLabel {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.subdued {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .incomeExpenseCard,
+  .balanceCard {
+    grid-column: span 1;
+  }
+
+  .assetsBody {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboardShell {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: relative;
+    flex-direction: row;
+    height: auto;
+    min-height: unset;
+    width: 100%;
+    justify-content: space-between;
+    padding: 14px 16px;
+  }
+
+  .monthList {
+    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+  }
+}

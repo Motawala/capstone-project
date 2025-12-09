@@ -1,0 +1,43 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(150deg, rgba(15, 23, 42, 0.94), rgba(10, 15, 31, 0.92));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  color: #e2e8f0;
+}
+
+.fullHeight {
+  min-height: 280px;
+  width: 100%;
+  justify-content: center;
+}
+
+.glow {
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.28), transparent 52%),
+    radial-gradient(circle at 70% 70%, rgba(244, 114, 182, 0.26), transparent 52%),
+    rgba(16, 23, 48, 0.8);
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  box-shadow: 0 16px 44px rgba(34, 211, 238, 0.22);
+}
+
+.label {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.hint {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+}

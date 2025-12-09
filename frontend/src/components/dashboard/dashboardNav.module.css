@@ -1,0 +1,122 @@
+.navbar {
+  width: 148px;
+  min-height: 92vh;
+  background: linear-gradient(165deg, rgba(15, 23, 42, 0.96), rgba(10, 15, 31, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 22px;
+  padding: 18px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  position: sticky;
+  top: 12px;
+}
+
+.account {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  color: #22d3ee;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  background: radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.28), rgba(244, 114, 182, 0.18));
+  box-shadow: 0 14px 38px rgba(34, 211, 238, 0.28);
+  margin-bottom: 8px;
+}
+
+.monthSection {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.monthLabel {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.monthList {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+
+.monthButton {
+  width: 100%;
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: #e2e8f0;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.monthButton:hover {
+  border-color: rgba(34, 211, 238, 0.45);
+  color: #22d3ee;
+  box-shadow: 0 12px 30px rgba(34, 211, 238, 0.18);
+  transform: translateY(-1px);
+}
+
+.active {
+  background: linear-gradient(145deg, rgba(34, 211, 238, 0.16), rgba(244, 114, 182, 0.16));
+  border-color: rgba(34, 211, 238, 0.45);
+  color: #22d3ee;
+  box-shadow: 0 14px 36px rgba(34, 211, 238, 0.25);
+}
+
+.logoutWrap {
+  margin-top: auto;
+  width: 100%;
+}
+
+.profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;   /* makes it circular */
+    object-fit: cover;    /* crops nicely */
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    min-height: unset;
+    gap: 14px;
+    padding: 14px 16px;
+  }
+
+  .monthSection {
+    margin-top: 0;
+  }
+
+  .monthList {
+    grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+    gap: 8px;
+  }
+
+  .logoutWrap {
+    width: auto;
+    max-width: 160px;
+  }
+
+    /* Smaller profile pic on mobile */
+    .profileImage {
+        width: 40px;
+        height: 40px;
+    }
+}
