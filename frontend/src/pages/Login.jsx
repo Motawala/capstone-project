@@ -1,6 +1,3 @@
-import GoogleIcon from '@mui/icons-material/Google'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import {
   Box,
   Container,
@@ -10,10 +7,13 @@ import {
   ThemeProvider,
   Typography,
   createTheme,
+    Alert,
 } from '@mui/material'
 import styles from './login.module.css'
-import {GoogleLogin} from "@react-oauth/google"
-import { jwtDecode } from "jwt-decode";
+import { GoogleLogin } from "@react-oauth/google"
+import { useState, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 
 const loginTheme = createTheme({
@@ -32,10 +32,54 @@ const loginTheme = createTheme({
 })
 
 function Login() {
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault()
     }
 
+    const apiBaseUrl = import.meta.env.VITE_BACKEND_URI || 'http://localhost:4000';
+    const frontEndURL = import.meta.env.VITE_FRONTEND_URL
+
+    const [error, setError] = useState(null)
+    const handleGoogleLogin = useCallback(
+        async (credentialsResponse) => {
+            setError(null);
+
+            try {
+                const credentials = credentialsResponse?.credential;
+                if (!credentialsResponse) {
+                    throw new Error("Missing credentials.");
+                }
+                console.log(`${apiBaseUrl}/auth/google`)
+                const response = await fetch(`${apiBaseUrl}/auth/google`, {
+                    method: "POST",
+                    body: JSON.stringify({ credentials }),
+                    headers: {'Content-Type': 'application/json'},
+                })
+
+                const body = await response.json().catch(() => {})
+
+                if (!response.ok) {
+                    throw new Error("Failed to authenticate credentials.")
+                }
+
+                localStorage.setItem('token', body.credentials)
+                localStorage.setItem('user', JSON.stringify(body.user))
+                localStorage.setItem('name', body.user.name)
+                localStorage.setItem('email', body.user.email)
+                localStorage.setItem('picture', body.user.picture)
+
+                navigate(`${frontEndURL}/dashboard`)
+            } catch (error) {
+                setError(error.message || "Login Failed Please Try Again.")
+            }
+        },
+        [apiBaseUrl]
+    )
+
+    const handleError = useCallback(() => {
+        setError("Google authentication failed. Please try again.")
+    })
     return (
         <ThemeProvider theme={loginTheme}>
             <CssBaseline />
@@ -67,32 +111,11 @@ function Login() {
                                 <Typography variant="h4" fontWeight={700}>
                                     Sign in to your Google account
                                 </Typography>
-                                {/*<Typography variant="body1" color="text.secondary">*/}
-                                {/*    Use your username or email to access your Spend Smart.*/}
-                                {/*</Typography>*/}
                             </Stack>
                             <GoogleLogin
-                                onSuccess={(credentialResponse) => {
-                                    const token = credentialResponse.credential;
-
-                                    // Decode the JWT Token
-                                    const decoded = jwtDecode(token);
-                                    // Save user info to localStorage
-                                    localStorage.setItem("token", token);
-                                    localStorage.setItem("user", decoded);
-                                    localStorage.setItem("eamil", decoded.email);
-                                    localStorage.setItem("name", decoded.name);
-                                    localStorage.setItem("picture", decoded.picture);
-
-                                    console.log("Decoded User:", decoded);
-
-                                    // Redirect to dashboard
-                                    window.location.href = "/dashboard";
-                                }}
-                                onError={() => {
-                                    console.log("Login Failed");
-                                }}
+                                onSuccess={handleGoogleLogin} onError={handleError}
                             />
+                            <Alert severity="info">{error}</Alert>
                         </Stack>
                     </Paper>
                 </Container>

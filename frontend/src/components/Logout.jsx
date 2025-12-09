@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { googleLogout } from '@react-oauth/google'
-import PowerSettingsNewRoundedIcon from '@mui/icons-material/PowerSettingsNewRounded'
 import styles from './logout.module.css'
+
 
 function Logout({ className = '' }) {
   const navigate = useNavigate()
@@ -14,7 +14,8 @@ function Logout({ className = '' }) {
       console.error('Google logout failed', error)
     }
 
-    localStorage.removeItem('credentialToken')
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
     navigate('/login', { replace: true })
   }, [navigate])
 
@@ -26,9 +27,6 @@ function Logout({ className = '' }) {
       title="Logout"
       aria-label="Logout"
     >
-      <span className={styles.icon} aria-hidden>
-        <PowerSettingsNewRoundedIcon fontSize="small" />
-      </span>
       <span className={styles.label}>Logout</span>
     </button>
   )

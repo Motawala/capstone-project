@@ -10,7 +10,8 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 88px;
+  min-height: 30px;
+    max-height: 30px;
   text-align: center;
   cursor: pointer;
   font-weight: 600;

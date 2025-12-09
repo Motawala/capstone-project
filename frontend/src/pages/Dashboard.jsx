@@ -11,6 +11,7 @@ function Dashboard() {
     console.log('Expense submitted:', expense)
   }, [])
 
+    const NAME = localStorage.getItem('name')
   return (
     <div className={styles.dashboardShell}>
       <DashboardNav activeMonth={activeMonth} onSelectMonth={setActiveMonth} />
@@ -30,8 +31,7 @@ function Dashboard() {
           </div>
 
           <div className={styles.datePill}>
-            <span className={styles.navLabel}>Active month</span>
-            <strong>{activeMonth}</strong>
+            <strong>Hello, {NAME}</strong>
           </div>
         </div>
 
