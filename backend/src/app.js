@@ -33,6 +33,12 @@ const verifyGoogleToken = async (token) => {
         throw new Error("Token audience does not match credentials");
     }
 
+    const now = Math.floor(Date.now() / 1000);
+    if (payload.exp < now) {
+        throw new Error("Token expired");
+    }
+
+
     return payload;
 }
 
@@ -49,6 +55,7 @@ app.post("/auth/google", async (req, res) => {
             email: googleProfile.email,
             name: googleProfile.name,
             picture: googleProfile.picture,
+            expiresAt: googleProfile.exp,
         }
         console.log("User Successfully Logged In.");
         return res.status(200).json({user, credentials});

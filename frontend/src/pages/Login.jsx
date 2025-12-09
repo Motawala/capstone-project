@@ -68,6 +68,8 @@ function Login() {
                 localStorage.setItem('name', body.user.name)
                 localStorage.setItem('email', body.user.email)
                 localStorage.setItem('picture', body.user.picture)
+                localStorage.setItem("expiresAt", body.user.expiresAt);
+
 
                 navigate(`${frontEndURL}/dashboard`)
             } catch (error) {
@@ -115,7 +117,11 @@ function Login() {
                             <GoogleLogin
                                 onSuccess={handleGoogleLogin} onError={handleError}
                             />
-                            <Alert severity="info">{error}</Alert>
+                            {error && (
+                                <Alert severity="error" variant="filled">
+                                    {error}
+                                </Alert>
+                            )}
                         </Stack>
                     </Paper>
                 </Container>
