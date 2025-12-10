@@ -8,4 +8,4 @@ const incomeSchema = new mongoose.Schema({
     date: { type: Date, required: true },
 });
 
-export default mongoose.model("Income", incomeSchema);
+export default mongoose.models.Income || mongoose.model("Income", incomeSchema);

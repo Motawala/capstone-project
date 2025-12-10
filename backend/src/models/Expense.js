@@ -14,4 +14,4 @@ const expenseSchema = new mongoose.Schema({
     paymentMethod: { type: String, required: true },
 });
 
-export default mongoose.model("Expense", expenseSchema);
+export default mongoose.models.Expense || mongoose.model("Expense", expenseSchema);
