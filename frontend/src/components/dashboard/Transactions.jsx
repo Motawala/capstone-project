@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from '../../pages/dashboard.module.css'
 
-function Transactions({ userId, activeMonth, year }) {
+function Transactions({ userId, activeMonth, year, refreshToken }) {
     const [transactions, setTransactions] = useState([])
     const apiBaseUrl = import.meta.env.VITE_BACKEND_URI
 
@@ -32,7 +32,20 @@ function Transactions({ userId, activeMonth, year }) {
         }
 
         fetchTransactions()
-    }, [userId, activeMonth, year])
+    }, [userId, activeMonth, year, refreshToken])
+
+    const handleDelete = async (id) => {
+        try {
+            // Optimistically remove
+            setTransactions((prev) => prev.filter((t) => t._id !== id))
+
+            await fetch(`${apiBaseUrl}/api/transactions/${id}`, {
+                method: 'DELETE',
+            })
+        } catch (err) {
+            console.error('Delete transaction error:', err)
+        }
+    }
 
     return (
         <div className={`${styles.tile} ${styles.recentCard}`}>
@@ -64,9 +77,19 @@ function Transactions({ userId, activeMonth, year }) {
                                     <span className={styles.txnDate}>{dateLabel}</span>
                                 </div>
 
-                                <span className={styles.txnAmount} style={amountStyle}>
-                  {txn.type === "income" ? "+" : "-"}${Number(txn.amount).toFixed(2)}
-                </span>
+                                <div className={styles.txnActions}>
+                                    <span className={styles.txnAmount} style={amountStyle}>
+                                      {txn.type === "income" ? "+" : "-"}${Number(txn.amount).toFixed(2)}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      className={styles.txnDelete}
+                                      onClick={() => handleDelete(txn._id)}
+                                      aria-label={`Delete transaction ${label}`}
+                                    >
+                                      Delete
+                                    </button>
+                                </div>
                             </li>
                         )
                     })}
@@ -80,6 +103,7 @@ Transactions.propTypes = {
     userId: PropTypes.string.isRequired,
     activeMonth: PropTypes.string.isRequired,
     year: PropTypes.number.isRequired,
+    refreshToken: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default Transactions

@@ -14,14 +14,19 @@ const MONTH_MAP = {
 
 
 function Dashboard() {
-    const [activeMonth, setActiveMonth] = useState('Jan')
+    const MONTH_NAMES = Object.keys(MONTH_MAP);
+    const currentMonthName = MONTH_NAMES[new Date().getMonth()];
+
+    const [activeMonth, setActiveMonth] = useState(currentMonthName);
     const [activeTab, setActiveTab] = useState('dashboard')
+    const [successInfo, setSuccessInfo] = useState(null)
+    const [refreshToken, setRefreshToken] = useState(0)
     const user = JSON.parse(localStorage.getItem("user"))
     const userId = user?.id
     const apiBaseUrl = import.meta.env.VITE_BACKEND_URI;
 
     const [balanceData, setBalanceData] = useState(0)
-    useEffect(() => {
+    const fetchBalance = useCallback(() => {
         if (!activeMonth) return;
 
         const monthNum = MONTH_MAP[activeMonth];
@@ -29,10 +34,13 @@ function Dashboard() {
 
         fetch(`${apiBaseUrl}/api/balance/monthlyBalance?userId=${userId}&month=${monthNum}&year=${year}`)
             .then(res => res.json())
-            .then(data => setBalanceData(data));
+            .then(data => setBalanceData(data))
+            .catch((err) => console.error('Balance fetch error:', err));
+    }, [activeMonth, apiBaseUrl, userId])
 
-        console.log(balanceData)
-    }, [activeMonth, apiBaseUrl, userId]);
+    useEffect(() => {
+        fetchBalance()
+    }, [fetchBalance]);
 
 
     const [incomeList, setIncomeList] = useState([])
@@ -60,6 +68,10 @@ function Dashboard() {
 
             // Update UI instantly
             setIncomeList(prev => [...prev, data])
+            setSuccessInfo({ type: 'income', message: 'Income added successfully' })
+            setRefreshToken(Date.now())
+            fetchBalance()
+            setTimeout(() => setSuccessInfo(null), 3000)
 
             console.log("Income Added:", data)
 
@@ -94,6 +106,10 @@ function Dashboard() {
 
             // Update UI instantly
             setExpenseList(prev => [...prev, data])
+            setSuccessInfo({ type: 'expense', message: 'Expense added successfully' })
+            setRefreshToken(Date.now())
+            fetchBalance()
+            setTimeout(() => setSuccessInfo(null), 3000)
 
             console.log("Expense Added:", data)
 
@@ -103,15 +119,6 @@ function Dashboard() {
     }
 
       const NAME = localStorage.getItem('name')
-      const recentTransactions = expenseList
-        .filter((txn) => {
-            if (!txn?.date) return false
-            const txnDate = new Date(txn.date)
-            if (Number.isNaN(txnDate)) return false
-            return (txnDate.getMonth() + 1) === MONTH_MAP[activeMonth]
-        })
-        .slice(-5)
-        .reverse()
       return (
         <div className={styles.dashboardShell}>
           <DashboardNav activeMonth={activeMonth} onSelectMonth={setActiveMonth} />
@@ -151,6 +158,31 @@ function Dashboard() {
               <Activity />
             ) : (
               <>
+                {successInfo && (
+                  <div className={styles.successBanner} role="status">
+                    <span className={styles.successType}>{successInfo.type === 'income' ? 'Income' : 'Expense'}</span>
+                    <span>{successInfo.message}</span>
+                  </div>
+                )}
+
+                <div className={styles.snapshotBar}>
+                  <div className={styles.snapshotText}>
+                    <div className={styles.kicker}>Overview</div>
+                    <div className={styles.tileTitle}>Your {activeMonth} snapshot</div>
+                  </div>
+                    <div
+                        className={styles.balanceAmount}
+                        style={{
+                            color: (balanceData?.finalBalance ?? 0) >= 0 ? "#22c55e" : "#ef4444"
+                        }}
+                    >
+                        {(balanceData?.finalBalance ?? 0) >= 0
+                            ? `+$${(balanceData?.finalBalance ?? 0).toLocaleString()}`
+                            : `-$${Math.abs(balanceData?.finalBalance ?? 0).toLocaleString()}`
+                        }
+                    </div>
+                </div>
+
                 <div className={styles.primaryGrid}>
                   <AddIncomeForm onSubmit={handleAddIncome} />
                   <AddExpenseForm onSubmit={handleAddExpense} />
@@ -158,34 +190,10 @@ function Dashboard() {
                       userId={userId}
                       year={new Date().getFullYear()}
                       activeMonth={activeMonth}
+                      refreshToken={refreshToken}
                   />
                 </div>
 
-                <div className={styles.grid}>
-                  <div className={`${styles.tile} ${styles.balanceCard}`}>
-                    <div className={styles.tileHeader}>
-                      <div>
-                        <div className={styles.kicker}>Overview</div>
-                        <div className={styles.tileTitle}>Your {activeMonth} snapshot</div>
-                      </div>
-                    </div>
-                    <div className={styles.balanceAmount}>${balanceData?.finalBalance || 0}</div>
-                    <div className={styles.balanceSub}>Select a month to keep tracking your spending.</div>
-                  </div>
-
-                  <div className={styles.tile}>
-                    <div className={styles.tileHeader}>
-                      <div>
-                        <div className={styles.kicker}>Status</div>
-                        <div className={styles.tileTitle}>Coming soon</div>
-                      </div>
-                    </div>
-                    <div className={styles.tileSubtitle}>
-                      More dashboard insights will appear here. For now, use the navigation bar to pick a month
-                      and log out when you are done.
-                    </div>
-                  </div>
-                </div>
               </>
             )}
           </main>

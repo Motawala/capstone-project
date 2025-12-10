@@ -1,5 +1,5 @@
 .navbar {
-  width: 148px;
+  width: 100px;
   min-height: 92vh;
   background: linear-gradient(165deg, rgba(15, 23, 42, 0.96), rgba(10, 15, 31, 0.92));
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -8,11 +8,12 @@
   padding: 18px 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 5px;
   align-items: center;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
   position: sticky;
   top: 12px;
+    max-height: 92vh;
 }
 
 .account {
@@ -31,7 +32,7 @@
 .monthSection {
   width: 100%;
   display: grid;
-  gap: 10px;
+  gap: 5px;
   margin-top: 6px;
 }
 
@@ -52,12 +53,12 @@
 
 .monthButton {
   width: 100%;
-  padding: 10px 8px;
+  padding: 3px 5px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
   color: #e2e8f0;
-  font-weight: 700;
+  font-weight: 300;
   letter-spacing: 0.3px;
   cursor: pointer;
   transition: all 0.16s ease;
@@ -89,6 +90,7 @@
     object-fit: cover;    /* crops nicely */
     cursor: pointer;
 }
+
 
 @media (max-width: 900px) {
   .navbar {

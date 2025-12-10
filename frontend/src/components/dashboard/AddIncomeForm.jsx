@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Button, MenuItem, TextField } from '@mui/material'
+import { Autocomplete, Button, TextField } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
 import dayjs from 'dayjs'
 import styles from '../../pages/dashboard.module.css'
 
@@ -14,19 +14,67 @@ function AddIncomeForm({ onSubmit }) {
   const [formData, setFormData] = useState({
     date: dayjs(),
     source: '',
-    category: '',
-    paymentMethod: '',
+    category: incomeTypes[0],
+    paymentMethod: paymentMethods[0],
     amount: '',
   })
 
-  const textFieldStyles = useMemo(
+  const textFieldStyles = useMemo(() => ({
+    variant: 'outlined',
+    color: 'info',
+    size: 'small',
+    required: true,
+    fullWidth: true,
+    margin: 'dense',
+    InputLabelProps: { sx: { color: '#94a3b8', '&.Mui-focused': { color: '#22d3ee' } } },
+    sx: {
+      backgroundColor: '#0d1326',
+      borderRadius: '10px',
+      '& .MuiOutlinedInput-root': {
+        borderRadius: '10px',
+        color: '#e2e8f0',
+        backgroundColor: '#0d1326',
+        minHeight: '44px',
+        '& fieldset': {
+          borderColor: '#22d3ee',
+        },
+        '&:hover fieldset': {
+          borderColor: '#22d3ee',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#22d3ee',
+          boxShadow: '0 0 0 2px rgba(34, 211, 238, 0.25)',
+        },
+      },
+      '& .MuiSvgIcon-root': {
+        color: '#22d3ee',
+      },
+      '& .MuiPickersCalendarHeader-label, & .MuiDayCalendar-weekDayLabel': {
+        color: '#cbd5e1',
+      },
+      '& .MuiPickersYear-button.Mui-selected': {
+        backgroundColor: 'rgba(34, 211, 238, 0.24)',
+        border: '1px solid #22d3ee',
+        color: '#e2e8f0',
+      },
+      '& .MuiPickersYear-button': {
+        color: '#e2e8f0',
+      },
+      '& .MuiPickersDay-root': {
+        color: '#e2e8f0',
+      },
+      '& .MuiPickersDay-root.Mui-selected': {
+        backgroundColor: 'rgba(34, 211, 238, 0.24)',
+        border: '1px solid #22d3ee',
+      },
+    },
+  }), [])
+
+  const autoCompleteProps = useMemo(
     () => ({
-      variant: 'outlined',
-      color: 'info',
-      size: 'small',
-      required: true,
       fullWidth: true,
-      InputLabelProps: { sx: { color: '#94a3b8', '&.Mui-focused': { color: '#22d3ee' } } },
+      disableClearable: true,
+      size: 'small',
       sx: {
         backgroundColor: '#0d1326',
         borderRadius: '12px',
@@ -47,6 +95,9 @@ function AddIncomeForm({ onSubmit }) {
         },
         '& .MuiSvgIcon-root': {
           color: '#22d3ee',
+        },
+        '& .MuiInputBase-root': {
+          minHeight: '44px',
         },
       },
     }),
@@ -82,14 +133,51 @@ function AddIncomeForm({ onSubmit }) {
         </div>
 
         <div className={styles.formColumn}>
-          <DatePicker
+          <DesktopDatePicker
             label="Date"
             value={formData.date}
             onChange={handleDateChange}
+            format="MM/DD/YYYY"
+            views={['year', 'month', 'day']}
             slotProps={{
               textField: {
                 ...textFieldStyles,
                 InputLabelProps: { ...textFieldStyles.InputLabelProps, shrink: true },
+              },
+              openPickerButton: { color: 'info', sx: { fontSize: 18 } },
+              desktopPaper: {
+                sx: {
+                  backgroundColor: '#0f1629',
+                  border: '1px solid #22d3ee',
+                  boxShadow: '0 14px 36px rgba(34, 211, 238, 0.16)',
+                  minWidth: 280,
+                  '.MuiPickersCalendarHeader-label': { color: '#e2e8f0', fontWeight: 700 },
+                  '.MuiPickersArrowSwitcher-button': { color: '#22d3ee' },
+                  '.MuiPickersCalendarHeader-switchViewButton': { color: '#22d3ee' },
+                  '.MuiPickersMonth-root, .MuiPickersYear-root': { color: '#e2e8f0' },
+                  '.MuiPickersMonth-monthButton': { color: '#e2e8f0' },
+                  '.MuiPickersMonth-monthButton.Mui-selected': {
+                    backgroundColor: 'rgba(34, 211, 238, 0.24)',
+                    border: '1px solid #22d3ee',
+                  },
+                  '.MuiPickersYear-yearButton': { color: '#e2e8f0' },
+                  '.MuiPickersYear-yearButton.Mui-selected': {
+                    backgroundColor: 'rgba(34, 211, 238, 0.24)',
+                    border: '1px solid #22d3ee',
+                  },
+                  '.MuiDayCalendar-weekDayLabel': { color: '#cbd5e1' },
+                  '.MuiPickersYear-button': { color: '#e2e8f0' },
+                  '.MuiPickersYear-button.Mui-selected': {
+                    backgroundColor: 'rgba(34, 211, 238, 0.24)',
+                    border: '1px solid #22d3ee',
+                    color: '#e2e8f0',
+                  },
+                  '.MuiPickersDay-root': { color: '#e2e8f0' },
+                  '.MuiPickersDay-root.Mui-selected': {
+                    backgroundColor: 'rgba(34, 211, 238, 0.24)',
+                    border: '1px solid #22d3ee',
+                  },
+                },
               },
             }}
           />
@@ -101,33 +189,57 @@ function AddIncomeForm({ onSubmit }) {
             {...textFieldStyles}
           />
 
-          <TextField
-            select
-            label="Category"
+          <Autocomplete
+            {...autoCompleteProps}
+            options={incomeTypes}
             value={formData.category}
-            onChange={handleChange('category')}
-            {...textFieldStyles}
-          >
-            {incomeTypes.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={(_, value) => setFormData((prev) => ({ ...prev, category: value }))}
+            slotProps={{
+              paper: {
+                sx: {
+                  backgroundColor: '#0f1629',
+                  border: '1px solid #1f2b4e',
+                  color: '#e2e8f0',
+                },
+              },
+              popupIndicator: { sx: { color: '#22d3ee' } },
+              clearIndicator: { sx: { color: '#22d3ee' } },
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Category"
+                {...textFieldStyles}
+                inputProps={{ ...params.inputProps, required: true }}
+              />
+            )}
+          />
 
-          <TextField
-            select
-            label="Payment Method"
+          <Autocomplete
+            {...autoCompleteProps}
+            options={paymentMethods}
             value={formData.paymentMethod}
-            onChange={handleChange('paymentMethod')}
-            {...textFieldStyles}
-          >
-            {paymentMethods.map((method) => (
-              <MenuItem key={method} value={method}>
-                {method}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={(_, value) => setFormData((prev) => ({ ...prev, paymentMethod: value }))}
+            slotProps={{
+              paper: {
+                sx: {
+                  backgroundColor: '#0f1629',
+                  border: '1px solid #1f2b4e',
+                  color: '#e2e8f0',
+                },
+              },
+              popupIndicator: { sx: { color: '#22d3ee' } },
+              clearIndicator: { sx: { color: '#22d3ee' } },
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Payment Method"
+                {...textFieldStyles}
+                inputProps={{ ...params.inputProps, required: true }}
+              />
+            )}
+          />
 
           <TextField
             label="Amount"
