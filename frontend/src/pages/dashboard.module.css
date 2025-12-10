@@ -224,7 +224,14 @@
   gap: 14px;
 }
 
-.addExpenseCard {
+.primaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.addExpenseCard,
+.addIncomeCard {
   background: var(--panel);
   border: 1px solid var(--stroke);
   border-radius: 18px;
@@ -232,6 +239,12 @@
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
   display: grid;
   gap: 12px;
+}
+
+.formColumn {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
 
 .formHeader {

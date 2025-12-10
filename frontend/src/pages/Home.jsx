@@ -70,7 +70,7 @@ function Home() {
                                 </Typography>
 
                                 <Typography variant="h4" fontWeight={700} sx={{ mb: 2 }}>
-                                    Welcome to Smart Expense Tracker
+                                    Welcome to Spend Smart
                                 </Typography>
 
                                 <Typography variant="body1" color="text.secondary">

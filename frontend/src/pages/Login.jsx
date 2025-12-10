@@ -50,7 +50,7 @@ function Login() {
                 if (!credentialsResponse) {
                     throw new Error("Missing credentials.");
                 }
-                console.log(`${apiBaseUrl}/auth/google`)
+
                 const response = await fetch(`${apiBaseUrl}/auth/google`, {
                     method: "POST",
                     body: JSON.stringify({ credentials }),
@@ -64,11 +64,11 @@ function Login() {
                 }
 
                 localStorage.setItem('token', body.credentials)
-                localStorage.setItem('user', JSON.stringify(body.user))
-                localStorage.setItem('name', body.user.name)
-                localStorage.setItem('email', body.user.email)
-                localStorage.setItem('picture', body.user.picture)
-                localStorage.setItem("expiresAt", body.user.expiresAt);
+                localStorage.setItem('user', JSON.stringify(body.userObj))
+                localStorage.setItem('name', body.userObj.name)
+                localStorage.setItem('email', body.userObj.email)
+                localStorage.setItem('picture', body.userObj.picture)
+                localStorage.setItem("expiresAt", body.userObj.expiresAt);
 
 
                 navigate(`${frontEndURL}/dashboard`)

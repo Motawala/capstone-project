@@ -7,13 +7,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import styles from '../../pages/dashboard.module.css'
 
-const categoryOptions = ['Housing', 'Food', 'Transport', 'Shopping', 'Health', 'Entertainment', 'Travel', 'Utilities', 'Other']
-const paymentMethods = ['Credit Card', 'Debit Card', 'Cash', 'UPI', 'Bank Transfer']
+const incomeTypes = ['Salary', 'Bonus', 'Investment', 'Gift', 'Freelance', 'Other']
+const paymentMethods = ['Bank Transfer', 'Cash', 'Check', 'UPI', 'Card']
 
-function AddExpenseForm({ onSubmit }) {
+function AddIncomeForm({ onSubmit }) {
   const [formData, setFormData] = useState({
     date: dayjs(),
-    description: '',
+    source: '',
     category: '',
     paymentMethod: '',
     amount: '',
@@ -72,12 +72,13 @@ function AddExpenseForm({ onSubmit }) {
     }
   }
 
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <form className={styles.addExpenseCard} onSubmit={handleSubmit}>
+      <form className={styles.addIncomeCard} onSubmit={handleSubmit}>
         <div className={styles.formHeader}>
-          <h3 className={styles.formTitle}>Add Expenses</h3>
-          <p className={styles.formHint}>Log a new expense to keep your {formData.date?.format('MMM') || 'month'} on track.</p>
+          <h3 className={styles.formTitle}>Add Income</h3>
+          <p className={styles.formHint}>Quickly log incoming funds to keep your totals current.</p>
         </div>
 
         <div className={styles.formColumn}>
@@ -94,9 +95,9 @@ function AddExpenseForm({ onSubmit }) {
           />
 
           <TextField
-            label="Expense Desc"
-            value={formData.description}
-            onChange={handleChange('description')}
+            label="Income Source"
+            value={formData.source}
+            onChange={handleChange('source')}
             {...textFieldStyles}
           />
 
@@ -107,7 +108,7 @@ function AddExpenseForm({ onSubmit }) {
             onChange={handleChange('category')}
             {...textFieldStyles}
           >
-            {categoryOptions.map((option) => (
+            {incomeTypes.map((option) => (
               <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
@@ -139,8 +140,8 @@ function AddExpenseForm({ onSubmit }) {
         </div>
 
         <div className={styles.formActions}>
-          <Button type="submit" variant="contained" color="info" size="small">
-            Save Expense
+          <Button type="submit" variant="contained" color="success" size="small">
+            Save Income
           </Button>
         </div>
       </form>
@@ -148,8 +149,8 @@ function AddExpenseForm({ onSubmit }) {
   )
 }
 
-AddExpenseForm.propTypes = {
+AddIncomeForm.propTypes = {
   onSubmit: PropTypes.func,
 }
 
-export default AddExpenseForm
+export default AddIncomeForm
