@@ -4,7 +4,7 @@ import User from "./models/User.js"
 import incomeRouter from "./routes/income.js";
 import balanceRouter from "./routes/balance.js";
 import expenseRouter from "./routes/expense.js";
-
+import transactionRouter from "./routes/transcations.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -18,6 +18,7 @@ app.use(express.json());
 app.use("/api/income", incomeRouter)
 app.use("/api/balance", balanceRouter);
 app.use("/api/expense", expenseRouter);
+app.use("/api/transactions", transactionRouter);
 
 // Google Client ID
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
