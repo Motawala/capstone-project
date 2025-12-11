@@ -157,7 +157,7 @@ aiRouter.post("/ask", async (req, res) => {
         const clean = sanitizeAIResponse(raw);
 
         // debug output
-        console.log("CLEAN AI JSON:", clean);
+        // console.log("CLEAN AI JSON:", clean);
 
         // parse JSON
         const parsed = JSON.parse(clean);
