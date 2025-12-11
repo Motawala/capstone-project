@@ -82,15 +82,16 @@ const verifyGoogleToken = async (token) => {
 ------------------------------------ */
 app.post("/auth/google", async (req, res) => {
     const { credentials } = req.body || {};
+
     if (!credentials) {
-        return res
-            .status(400)
-            .json({ status: "Google credentials are required." });
+        return res.status(400).json({ message: "Google credentials are required." });
     }
 
     try {
+        // 1. Verify Google Token
         const googleProfile = await verifyGoogleToken(credentials);
 
+        // 2. Check if user exists in database
         let user = await User.findOne({ googleId: googleProfile.sub });
 
         if (!user) {
@@ -100,10 +101,10 @@ app.post("/auth/google", async (req, res) => {
                 email: googleProfile.email,
                 picture: googleProfile.picture,
             });
-
             console.log("New Google user created.");
         }
 
+        // 3. Build user object in the SAME SHAPE the frontend expects
         const userObj = {
             id: user._id,
             name: googleProfile.name,
@@ -113,15 +114,22 @@ app.post("/auth/google", async (req, res) => {
         };
 
         console.log("User successfully logged in.");
-        return res.status(200).json({ user: userObj });
+
+        // 4. Return EXACT keys expected by frontend
+        return res.status(200).json({
+            userObj,        // <--- IMPORTANT name
+            credentials,    // <--- return token
+        });
+
     } catch (error) {
         console.error("Failed login:", error.message);
 
         const status = error.message.includes("audience") ? 401 : 400;
-        return res
-            .status(status)
-            .json({ message: error.message || "Authentication error" });
+        return res.status(status).json({
+            message: error.message || "Authentication error"
+        });
     }
 });
+
 
 export default app;
