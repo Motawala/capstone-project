@@ -4,6 +4,7 @@ import AddExpenseForm from '../components/dashboard/AddExpenseForm'
 import AddIncomeForm from '../components/dashboard/AddIncomeForm'
 import Activity from '../components/dashboard/Activity'
 import Transactions from '../components/dashboard/Transactions'
+import AiAssistant from '../components/assistant/AiAssistant.jsx'
 import styles from './dashboard.module.css'
 
 
@@ -42,6 +43,11 @@ function Dashboard() {
         fetchBalance()
     }, [fetchBalance]);
 
+    const triggerRefresh = useCallback(() => {
+        setRefreshToken(Date.now())
+        fetchBalance()
+    }, [fetchBalance])
+
 
     const [incomeList, setIncomeList] = useState([])
     const handleAddIncome = async (formData) => {
@@ -69,8 +75,7 @@ function Dashboard() {
             // Update UI instantly
             setIncomeList(prev => [...prev, data])
             setSuccessInfo({ type: 'income', message: 'Income added successfully' })
-            setRefreshToken(Date.now())
-            fetchBalance()
+            triggerRefresh()
             setTimeout(() => setSuccessInfo(null), 3000)
 
             console.log("Income Added:", data)
@@ -107,8 +112,7 @@ function Dashboard() {
             // Update UI instantly
             setExpenseList(prev => [...prev, data])
             setSuccessInfo({ type: 'expense', message: 'Expense added successfully' })
-            setRefreshToken(Date.now())
-            fetchBalance()
+            triggerRefresh()
             setTimeout(() => setSuccessInfo(null), 3000)
 
             console.log("Expense Added:", data)
@@ -154,14 +158,23 @@ function Dashboard() {
               </div>
             </div>
 
-            {activeTab === 'activity' ? (
-                <Activity
-                    userId={userId}
-                    month={MONTH_MAP[activeMonth]}
-                    year={new Date().getFullYear()}
-                />
+              {activeTab === 'activity' ? (
 
-            ) : (
+                  <Activity
+                      userId={userId}
+                      month={MONTH_MAP[activeMonth]}
+                      year={new Date().getFullYear()}
+                  />
+
+              ) : activeTab === 'ai assistant' ? (
+
+                  <AiAssistant
+                      userId={userId}
+                      month={MONTH_MAP[activeMonth]}
+                      year={new Date().getFullYear()}
+                  />
+
+              ) : (
               <>
                 {successInfo && (
                   <div className={styles.successBanner} role="status">
@@ -196,6 +209,7 @@ function Dashboard() {
                       year={new Date().getFullYear()}
                       activeMonth={activeMonth}
                       refreshToken={refreshToken}
+                      onChange={triggerRefresh}
                   />
                 </div>
 

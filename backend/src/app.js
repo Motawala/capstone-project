@@ -5,6 +5,7 @@ import incomeRouter from "./routes/income.js";
 import balanceRouter from "./routes/balance.js";
 import expenseRouter from "./routes/expense.js";
 import transactionRouter from "./routes/transcations.js";
+import aiRouter from "./routes/aiAssistant.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use("/api/income", incomeRouter)
 app.use("/api/balance", balanceRouter);
 app.use("/api/expense", expenseRouter);
 app.use("/api/transactions", transactionRouter);
+app.use("/api/ai", aiRouter);
 
 // Google Client ID
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;

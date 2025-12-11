@@ -1,6 +1,9 @@
 import CategoryPieChart from "../activity/CategoryPieChart.jsx";
 import IncomeExpenseLineChart from "../activity/IncomeExpenseLineChart.jsx";
+import SpendingHeatmap from "../activity/SpendingHeatmap.jsx";
+import DailyCashflowAreaChart from "../activity/DailyCashflowAreaChart.jsx";
 import styles from "../../pages/dashboard.module.css";
+
 
 function Activity({ userId, month, year }) {
     return (
@@ -16,13 +19,21 @@ function Activity({ userId, month, year }) {
             </div>
 
             <div className={`${styles.tile} ${styles.activityCard}`}>
-                <h4 className={styles.activityHeader}>Payment Methods Split</h4>
-                <p className={styles.activityHint}>Pie or donut chart area.</p>
+                <h4 className={styles.activityHeader}>Spending Heatmap</h4>
+                <SpendingHeatmap
+                    userId={userId}
+                    month={month}
+                    year={year}
+                />
             </div>
 
             <div className={`${styles.tile} ${styles.activityCard}`}>
-                <h4 className={styles.activityHeader}>Alerts & Insights</h4>
-                <p className={styles.activityHint}>Tips & anomaly detection coming soon.</p>
+                <h4 className={styles.activityHeader}>Daily Cash Flow</h4>
+                <DailyCashflowAreaChart
+                    userId={userId}
+                    month={month}
+                    year={year}
+                />
             </div>
         </div>
     );

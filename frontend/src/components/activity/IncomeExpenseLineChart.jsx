@@ -57,21 +57,48 @@ export default function IncomeExpenseLineChart({ userId, month, year }) {
                     { data: expenseData, label: "Expense" },
                 ]}
                 xAxis={[
-                    { scaleType: "point", data: labels }
+                    {
+                        scaleType: "point",
+                        data: labels,
+                        tickLabelStyle: { fill: "#ffffff" },
+                        labelStyle: { fill: "#ffffff" },
+                        slotProps: {
+                            axisLine: { stroke: "#ffffff" },
+                            axisTick: { stroke: "#ffffff" },
+                        },
+                    }
                 ]}
-                yAxis={[{ width: 50 }]}
+                yAxis={[
+                    {
+                        width: 50,
+                        tickLabelStyle: { fill: "#ffffff" },
+                        labelStyle: { fill: "#ffffff" },
+                        slotProps: {
+                            axisLine: { stroke: "#ffffff" },
+                            axisTick: { stroke: "#ffffff" },
+                        },
+                    }
+                ]}
                 margin={{ right: 24 }}
+                slotProps={{
+                    legend: {
+                        labelStyle: { fill: "#ffffff", color: "#ffffff" },
+                    },
+                }}
 
                 // 🌟 ALL TEXT WHITE
                 sx={{
-                    "& text": { fill: "#ffffff",  },
+                    "& text": { fill: "#ffffff" },
 
                     // Axis labels
-                    "& .MuiChartsAxis-label": { fill: "#ffffff", color:"#ffffff"},
-                    "& .MuiChartsAxis-tickLabel": { fill: "#ffffff", color:"#ffffff" },
+                    "& .MuiChartsAxis-label": { fill: "#ffffff", color: "#ffffff" },
+                    "& .MuiChartsAxis-tickLabel": { fill: "#ffffff", color: "#ffffff" },
+                    "& .MuiChartsAxis-bottom .MuiChartsAxis-line, & .MuiChartsAxis-left .MuiChartsAxis-line": {
+                        stroke: "#ffffff",
+                    },
 
                     // Legend labels
-                    "& .MuiChartsLegend-label": { fill: "#ffffff", color:"#ffffff" },
+                    "& .MuiChartsLegend-label": { fill: "#ffffff", color: "#ffffff" },
 
                     // Tooltip text
                     "& .MuiChartsTooltip-root": {
