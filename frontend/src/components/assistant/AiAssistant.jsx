@@ -7,7 +7,7 @@ export default function AiAssistant({ userId, month, year }) {
         {
             id: "welcome",
             role: "assistant",
-            text: "Hi, I am your finance copilot. Ask about spending trends, forecasts, or saving ideas for this month.",
+            text: "Hi, I am your Spend Smart copilot. Ask about spending trends, forecasts, or saving ideas for this month.",
         },
     ]);
     const [isLoading, setIsLoading] = useState(false);
@@ -181,7 +181,7 @@ export default function AiAssistant({ userId, month, year }) {
                 <div className={styles.aiHeroText}>
                     <div className={styles.aiBadge}>AI</div>
                     <div>
-                        <h2 className={styles.aiTitle}>Finance Copilot</h2>
+                        <h2 className={styles.aiTitle}>Spend Smart Copilot</h2>
                         <p className={styles.aiSubtitle}>
                             Ask about spending, income, or projections for {month}/{year}.
                         </p>
