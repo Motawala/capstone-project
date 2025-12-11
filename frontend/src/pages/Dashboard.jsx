@@ -155,7 +155,12 @@ function Dashboard() {
             </div>
 
             {activeTab === 'activity' ? (
-              <Activity />
+                <Activity
+                    userId={userId}
+                    month={MONTH_MAP[activeMonth]}
+                    year={new Date().getFullYear()}
+                />
+
             ) : (
               <>
                 {successInfo && (

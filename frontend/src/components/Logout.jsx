@@ -32,4 +32,4 @@ function Logout({ className = '' }) {
   )
 }
 
-export default Logout
+export default Logout;
