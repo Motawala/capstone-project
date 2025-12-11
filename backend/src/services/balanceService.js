@@ -1,7 +1,6 @@
 import Income from "../models/income.js";
 import Expense from "../models/expense.js";
 import mongoose from "mongoose";
-import income from "../models/income.js";
 
 /**
  * Helper: Convert month (1–12) to date range
