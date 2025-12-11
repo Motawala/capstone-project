@@ -1,5 +1,5 @@
-import Income from "../models/income.js";
-import Expense from "../models/expense.js";
+import Income from "../models/Income.js";
+import Expense from "../models/Expense.js";
 import mongoose from "mongoose";
 
 /**
