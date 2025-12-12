@@ -54,6 +54,19 @@ VITE_BACKEND_URI=http://localhost:5000
 4. **Start frontend**  
    `cd frontend && npm run dev` then open the printed local URL.
 
+## Dev Container
+Spin up a reproducible environment (Node 20 + MongoDB) in VS Code or the Dev Containers CLI:
+
+1. Install the "Dev Containers" extension (or `devcontainer` CLI).
+2. Open the repository folder and select **Reopen in Container**.
+3. The container will automatically install frontend/backend dependencies and start a MongoDB sidecar (port 27017).
+4. Run the usual scripts inside the container terminal:
+    - Backend: `npm run dev` from `/workspace/backend` (API on port 4000)
+    - Frontend: `npm run dev` from `/workspace/frontend` (Vite on port 5173)
+
+Configuration lives in `.devcontainer/` and forwards ports **4000**, **5173**, and **27017** so the app and database are reachable from your host.
+
+
 ## Key Features (UI)
 - **Dashboard**: Month navigation, balance snapshot, quick add income/expense, recent transactions with top-mounted toast + confirmation modal.
 - **Activity**: Income vs Expense line chart, daily cashflow area chart, category pie, spending heatmap.
@@ -84,4 +97,20 @@ VITE_BACKEND_URI=http://localhost:5000
 - **Mongo connection**: Confirm `MONGODB_URI` and `MONGODB_DB_NAME`; backend exits on connection failure.
 - **OpenAI errors**: Verify `OPENAI_API_KEY` and network egress; watch backend logs.
 
-Happy building!
+## References
+
+**Citation:**
+
+- OpenAI. (2024). OpenAI API Documentation. https://platform.openai.com/docs
+- Material UI. (2025). MUI React Component Library Documentation. https://mui.com/x/
+- Meta Platforms. (2025). *React: A JavaScript library for building user interfaces*. https://react.dev/
+- You, E. (2025). *Vite: Next generation frontend tooling*. https://vitejs.dev/
+- OpenJS Foundation. (2025). *Express.js web application framework documentation*. https://expressjs.com/
+- MongoDB Inc. (2025). *MongoDB Documentation*. https://www.mongodb.com/docs/
+- Automatic. (2025). *Mongoose ODM Documentation*. https://mongoosejs.com/
+- Google Developers. (2025). *Google Identity Services: OAuth 2.0 documentation*. https://developers.google.com/identity
+- OpenJS Foundation. (2025). *Node.js: JavaScript runtime built on Chrome's V8 engine*. https://nodejs.org/
+- OpenJS Foundation. (2025). *npm: Node package manager documentation*. https://www.npmjs.com/
+
+
+

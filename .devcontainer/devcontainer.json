@@ -1,26 +1,42 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
-	"name": "Node.js",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-
-	// Configure tool-specific properties.
-  "customizations" : {
-    "jetbrains" : {
-      "backend" : "WebStorm"
+  "name": "SpendSmart Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [4000, 5173, 27017],
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
     }
   },
 
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "postCreateCommand": "npm ci --prefix backend && npm ci --prefix frontend",
+  "remoteEnv": {
+    "VITE_BACKEND_URI": "http://localhost:4000"
+  },
+  "portsAttributes": {
+    "4000": {
+      "label": "API (backend)"
+    },
+    "5173": {
+      "label": "Vite (frontend)"
+    },
+    "27017": {
+      "label": "MongoDB"
+    }
+  }
 }

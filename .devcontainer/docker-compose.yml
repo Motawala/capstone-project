@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    depends_on:
+      - mongo
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/spendsmart
+      MONGODB_DB_NAME: spendsmart
+    ports:
+      - "5173:5173"
+      - "4000:4000"
+    networks:
+      - spendsmart
+
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - spendsmart
+
+volumes:
+  mongo-data:
+
+networks:
+  spendsmart:

@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
     // Token expired → logout
     if (now > Number(expiresAt)) {
         localStorage.clear();
-        return  <Navigate to="/login" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     // If no token → redirect to Login Page.
@@ -17,6 +17,5 @@ export default function ProtectedRoute({ children }) {
         navigate("/login")
         return <Navigate to="/login" replace />;
     }
-
     return children;
 }
