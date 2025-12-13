@@ -13,6 +13,8 @@ import styles from './login.module.css'
 import { GoogleLogin } from "@react-oauth/google"
 import { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading.jsx";
+
 
 
 
@@ -33,17 +35,16 @@ const loginTheme = createTheme({
 
 function Login() {
     const navigate = useNavigate();
-    const handleSubmit = (event) => {
-        event.preventDefault()
-    }
-
     const apiBaseUrl = import.meta.env.VITE_BACKEND_URI || 'http://localhost:4000';
     const frontEndURL = import.meta.env.VITE_FRONTEND_URL
+    const dashboardPath = frontEndURL ? `${frontEndURL}/dashboard` : '/dashboard'
 
     const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
     const handleGoogleLogin = useCallback(
         async (credentialsResponse) => {
             setError(null);
+            setLoading(true);
 
             try {
                 const credentials = credentialsResponse?.credential;
@@ -71,17 +72,28 @@ function Login() {
                 localStorage.setItem("expiresAt", body.userObj.expiresAt);
 
 
-                navigate(`${frontEndURL}/dashboard`)
+                navigate(dashboardPath)
             } catch (error) {
                 setError(error.message || "Login Failed Please Try Again.")
+                setLoading(false);
             }
         },
-        [apiBaseUrl]
+        [apiBaseUrl, dashboardPath, navigate]
     )
 
     const handleError = useCallback(() => {
         setError("Google authentication failed. Please try again.")
-    })
+    }, [])
+    if (loading) {
+        return (
+            <ThemeProvider theme={loginTheme}>
+                <CssBaseline />
+                <Box className={styles.screen}>
+                    <Loading message="Signing you in..." fullHeight />
+                </Box>
+            </ThemeProvider>
+        )
+    }
     return (
         <ThemeProvider theme={loginTheme}>
             <CssBaseline />
